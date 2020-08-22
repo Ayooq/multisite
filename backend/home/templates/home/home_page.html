@@ -1,21 +1,43 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-homepage{% endblock %}
 
 {% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_page.css' %}">
 {% endblock extra_css %}
 
 {% block content %}
 
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-{% include 'home/welcome_page.html' %}
+{% comment %} Hero unit {% endcomment %}
+{% image page.background_image original as bg_img %}
+
+<div class="hero jumbotron jumbotron-fluid vh-100">
+    <div
+        class="hero hero__parallax"
+        style="background-image: url({{ bg_img.url }});">
+    </div>
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <h1 class="col-9 display-4">{{ page.summary }}</h1>
+            <div class="col-12 mb-5">{{ page.features|richtext }}</div>
+            <a
+                class="col-auto btn btn-primary text-decoration-none"
+                href="{% slugurl 'contacts' %}"
+            >ближе к делу</a>
+        </div>
+    </div>
+</div>
+
+{% comment %} Sections {% endcomment %}
+{% for section in page.sections.all %}
+        <h2>{{ section.heading }}</h2>
+
+        {% if section.subheading %}
+            <h3>{{ section.subheading }}</h3>
+        {% endif %}
+
+        {% comment %} <p>{{ section.body|richtext }}</p> {% endcomment %}
+{% endfor %}
 
 {% endblock content %}
