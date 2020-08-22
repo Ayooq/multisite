@@ -1,0 +1,36 @@
+<ul class="navbar-nav mr-auto">
+    {% for item in menu_items %}
+        {% if item.sub_menu %}
+            <li class="nav-item dropdown {{ item.active_class }}">
+                {% for sub_item in item.sub_menu.items %}
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="{{ item.href }}"
+                        id="navbarDropdownMenuLink"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        {{ item.text }}
+                    </a>
+                    <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdownMenuLink"
+                    >
+                        <a
+                            class="dropdown-item {{ sub_item.active_class }}"
+                            href="{{ sub_item.href }}"
+                        >
+                            {{ sub_item.text }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </li>
+        {% else %}
+            <li class="nav-item {{ item.active_class }}">
+                <a class="nav-link" href="{{ item.href }}">{{ item.text }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
