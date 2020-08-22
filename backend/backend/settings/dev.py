@@ -7,10 +7,19 @@ DEBUG = True
 SECRET_KEY = '$x7pjxlxu0+w@)4n!wd3stui)rx_o=dyby^y5^m(5u&ak_#187'
 
 # SECURITY WARNING: define the correct hosts in production!
-ALLOWED_HOSTS = ['*'] 
+ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+INSTALLED_APPS += [
+    'debug_toolbar',
+    'django_extensions',
+    'wagtail.contrib.styleguide',
+]
+
+MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+] + MIDDLEWARE
 
 try:
     from .local import *
